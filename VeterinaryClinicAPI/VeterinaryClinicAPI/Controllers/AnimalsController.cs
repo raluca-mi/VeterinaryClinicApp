@@ -1,5 +1,6 @@
 ﻿using Core.Dtos;
 using Core.Services;
+using DataLayer.Dtos;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ namespace VeterinaryClinicAPI.Controllers
         }
 
         [HttpGet("/get/{animalId}")]
-        public ActionResult<Animal> GetById(int animalId)
+        public ActionResult<AnimalDto> GetById(int animalId)
         {
             var result = animalService.GetById(animalId);
             if (result == null)
@@ -47,5 +48,22 @@ namespace VeterinaryClinicAPI.Controllers
 
             return result;
         }
+
+        [HttpDelete("/delete/{animalId}")]
+        public ActionResult<bool> DeleteAnimal(int animalId) { 
+        
+            if(animalId ==null)
+            {
+                return NotFound("Animal not found");
+            }
+            
+            var result = animalService.DeleteAnimal(animalId);
+            if(result)
+            {
+                return Ok("Animal deleted succsessfully");
+            }
+            return NotFound("Animal not found!");
+        }
+
     }
 }

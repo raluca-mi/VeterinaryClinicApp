@@ -1,6 +1,8 @@
 ﻿using DataLayer.Repositories;
 using DataLayer.Entities;
 using Core.Dtos;
+using DataLayer.Mapping;
+using DataLayer.Dtos;
 
 namespace Core.Services
 {
@@ -17,9 +19,10 @@ namespace Core.Services
             var result = animalsRepository.GetAll();
             return result;
         }
-        public Animal GetById(int animalId)
+        public AnimalDto GetById(int animalId)
         {
-            var result = animalsRepository.GetById(animalId);
+            var result = animalsRepository.GetById(animalId).ToAnimalDto();
+            
             return result;
         }
 
@@ -36,6 +39,11 @@ namespace Core.Services
             result.HealthCertificate.Weight = payload.HealthCertificate.Weight;
 
             return true;
+        }
+
+        public bool DeleteAnimal(int animalId) {
+           
+            return animalsRepository.DeleteById(animalId);
         }
 
         

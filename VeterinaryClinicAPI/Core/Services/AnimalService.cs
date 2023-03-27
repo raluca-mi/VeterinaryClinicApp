@@ -1,5 +1,6 @@
 ﻿using DataLayer.Repositories;
 using DataLayer.Entities;
+using Core.Dtos;
 
 namespace Core.Services
 {
@@ -20,6 +21,21 @@ namespace Core.Services
         {
             var result = animalsRepository.GetById(animalId);
             return result;
+        }
+
+        public bool EditWeight(AnimalUpdateDto payload)
+        {
+            if (payload == null || payload.HealthCertificate.Weight == null)
+            {
+                return false;
+            }
+
+            var result = animalsRepository.GetById(payload.Id);
+            if (result == null) return false;
+
+            result.HealthCertificate.Weight = payload.HealthCertificate.Weight;
+
+            return true;
         }
 
         

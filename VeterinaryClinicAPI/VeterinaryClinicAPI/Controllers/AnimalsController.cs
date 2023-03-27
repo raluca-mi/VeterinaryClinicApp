@@ -1,4 +1,5 @@
-﻿using Core.Services;
+﻿using Core.Dtos;
+using Core.Services;
 using DataLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,19 @@ namespace VeterinaryClinicAPI.Controllers
                 return BadRequest("Animal not found!");
             }
             return Ok(result);
+        }
+
+        [HttpPatch("/edit-weight")]
+        public ActionResult<bool> EditWeight([FromBody] AnimalUpdateDto payload)
+        {
+            var result = animalService.EditWeight(payload);
+
+            if (!result)
+            {
+                return BadRequest("Animal could not be updated.");
+            }
+
+            return result;
         }
     }
 }
